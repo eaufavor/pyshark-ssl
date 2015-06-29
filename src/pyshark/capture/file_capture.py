@@ -13,7 +13,7 @@ class FileCapture(Capture):
     """
 
     def __init__(self, input_file=None, keep_packets=True, display_filter=None, only_summaries=False,
-                 decryption_key=None, encryption_type='wpa-pwk', decode_as=None, tshark_path=None):
+                 decryption_key=None, encryption_type='wpa-pwk', decode_as=None, tshark_path=None, sslkey_path=None):
         """
         Creates a packet capture object by reading from file.
 
@@ -33,7 +33,7 @@ class FileCapture(Capture):
         """
         super(FileCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
                                           decryption_key=decryption_key, encryption_type=encryption_type,
-                                          decode_as=decode_as, tshark_path=tshark_path)
+                                          decode_as=decode_as, tshark_path=tshark_path, sslkey_path=sslkey_path)
         self.input_filename = input_file
         if not isinstance(input_file, basestring):
             self.input_filename = input_file.name
