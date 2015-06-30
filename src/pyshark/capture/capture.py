@@ -31,7 +31,7 @@ class Capture(object):
 
     def __init__(self, display_filter=None, only_summaries=False, eventloop=None,
                  decryption_key=None, encryption_type='wpa-pwd', output_file=None,
-                 decode_as=None, tshark_path=None, sslkey_path=None):
+                 decode_as=None, tshark_path=None, sslkey_path=None, http_only=False):
         self._packets = []
         self.current_packet = 0
         self.display_filter = display_filter
@@ -43,6 +43,7 @@ class Capture(object):
         self.sslkey_path = sslkey_path
         self.log = logbook.Logger(self.__class__.__name__, level=self.DEFAULT_LOG_LEVEL)
         self.tshark_path = tshark_path
+        self.http_only = http_only
 
         self.eventloop = eventloop
         if self.eventloop is None:
@@ -343,6 +344,8 @@ class Capture(object):
         if self.sslkey_path:
             params += ['-o', 'ssl.desegment_ssl_records:TRUE', '-o', 'ssl.desegment_ssl_application_data:TRUE',
                             '-o','tcp.desegment_tcp_streams:TRUE', '-o', 'ssl.keylog_file:'+self.sslkey_path]
+        if self.http_only:
+            params += ['-2', '-R', 'tcp.port == 80 || tcp.port == 443']
 
         if self.output_file:
             params += ['-w', self.output_file]
