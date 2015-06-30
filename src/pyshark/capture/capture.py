@@ -345,7 +345,7 @@ class Capture(object):
             params += ['-o', 'ssl.desegment_ssl_records:TRUE', '-o', 'ssl.desegment_ssl_application_data:TRUE',
                             '-o','tcp.desegment_tcp_streams:TRUE', '-o', 'ssl.keylog_file:'+self.sslkey_path]
         if self.http_only:
-            params += ['-2', '-R', 'tcp.port == 80 || tcp.port == 443']
+            params += ['-Y', 'tcp.port == 80 || tcp.port == 443']
 
         if self.output_file:
             params += ['-w', self.output_file]
